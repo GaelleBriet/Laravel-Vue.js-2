@@ -115,8 +115,8 @@ services:
     depends_on:
       - mysql
     ports:
-      - "9080:80"
-      - "9000:8000"
+      - "8090:80"
+      - "8005:8000"
     volumes:
       - .:/var/www/html
   mysql:
@@ -133,7 +133,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "9085:8080"
+      - "8085:8080"
 ```
 
 Les ports ont été définis afin d'éviter les conflits avec une éventuelle installation de MySQL ou d'Apache sur la machine hôte.
@@ -146,7 +146,7 @@ docker-compose up -d --build
 
 ---
 
-L'application Laravel devrait être disponible à l'adresse [http://localhost:9080](http://localhost:9080) ou l'adresse de votre machine (sur le bon port).
+L'application Laravel devrait être disponible à l'adresse [http://localhost:8090](http://localhost:8090) ou l'adresse de votre machine (sur le bon port).
 
 > Si vous êtes sur Windows ou Mac et que vous avez une erreur 404 en utilisant l'environnement Docker, essayez d'utiliser un autre navigateur. Il est probable que Firefox, notamment, rencontre des soucis.
 
@@ -177,7 +177,7 @@ Cette commande permet d'optimiser l'application Laravel, en générant des fichi
 
 ### Accès à la base de données
 
-On peut accéder à la base de données via l'interface Adminer, disponible à l'adresse [http://localhost:9085](http://localhost:9085) ou l'adresse de votre machine (sur le bon port).
+On peut accéder à la base de données via l'interface Adminer, disponible à l'adresse [http://localhost:8085](http://localhost:8085) ou l'adresse de votre machine (sur le bon port).
 
 Les identifiants sont les suivants :
 - Serveur : `mysql`
