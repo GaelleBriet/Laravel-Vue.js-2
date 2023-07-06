@@ -1,0 +1,26 @@
+version: "3"
+services:
+  api:
+    build: .
+    depends_on:
+      - mysql
+    ports:
+      - "9080:80"
+      - "9000:8000"
+    volumes:
+      - .:/var/www/html
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "4306:3306"
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=root
+  adminer:
+    image: adminer:4.8.1
+    depends_on:
+      - mysql
+    ports:
+      - "9085:8080"
