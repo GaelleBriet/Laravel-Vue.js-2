@@ -1,0 +1,31 @@
+@startuml Estimate calculator
+
+class EstimateField {
+  +name
+  +slug
+  +type
+}
+
+class EstimatePresetValue {
+  +label
+  +value
+  +time
+  +startup_time
+  +total_percentage
+}
+
+class Estimate {
+  +name
+  +total_time
+}
+
+class EstimateLine {
+  +label
+  +time
+  +type
+}
+
+Estimate "1" -- "0..n" EstimateLine : contains
+EstimateField "1" -- "0..n" EstimatePresetValue : proposes
+
+@enduml

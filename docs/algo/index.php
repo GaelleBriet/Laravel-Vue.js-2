@@ -109,13 +109,41 @@ $dataSent = $dataSentArray[0];
 // -------------- Ton algo ici --------------
 
 
-// Le résultat devra avoir cette forme, à toi de remplir le total, 
-// le tableau de lignes et les lignes de temps additionnel.
-$result = [
-    'total' => 0,
-    'lines' => [],
-    'additional' => []
-];
+$total = 0;
+$lines = [];
+$additional = [];
+
+// Get project and design types from input data~
+$projectType = $dataSent['projectType'];
+$designType = $dataSent['designType'];
+
+// Compute additional percentages based on project and design types~
+$projectPercentage = $projectType ? $projectTypes[$projectType]['total_percentage'] : 0;
+$designPercentage = $designType ? $designTypes[$designType]['total_percentage'] : 0;
+$additionalPercentage = $projectPercentage + $designPercentage;
+
+// Add startup time for project type if specified~
+$startupTime = $projectTypes[$projectType]['startup_time'];
+$lines[] = ['name' => 'Mise en place du projet', 'time' => $startupTime];
+$total += $startupTime;
+
+// Add generic development times from input data~
+foreach ($dataSent['genericDevelopments'] as $development) {
+    $devTime = $genericDevelopments[$development] ?? 0;
+    $total += $devTime;
+    $lines[] = ['name' => $development, 'time' => $devTime];
+}
+
+// Add additional times based on percentages~
+$additional[] = ['name' => "Type de projet : $projectType", 'time' => $total * $projectPercentage / 100];
+$additional[] = ['name' => "Type de design : $designType", 'time' => $total * $designPercentage / 100];
+
+// Add additional times to total~
+$total *= (100 + $additionalPercentage) / 100;
+$total = round($total);
+
+// Return result object with total, lines, and additional arrays~
+$result = ['total' => $total, 'lines' => $lines, 'additional' => $additional];
 
 // -------------- Fin de ton algo ------------
 
