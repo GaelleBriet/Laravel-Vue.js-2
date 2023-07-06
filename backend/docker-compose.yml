@@ -5,8 +5,8 @@ services:
     depends_on:
       - mysql
     ports:
-      - "9080:80"
-      - "9000:8000"
+      - "8090:80"
+      - "8005:8000"
     volumes:
       - .:/var/www/html
   mysql:
@@ -23,4 +23,4 @@ services:
     depends_on:
       - mysql
     ports:
-      - "9085:8080"
+      - "8085:8080"
