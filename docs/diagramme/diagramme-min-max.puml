@@ -1,0 +1,42 @@
+@startuml Estimato'r
+!theme sketchy
+
+entity EstimateField {
+  *id
+  --
+  *name
+  *slug
+  *type
+}
+
+entity EstimatePresetValue {
+  *id
+  --
+  *label
+  *value
+  time
+  startup_time
+  total_percentage
+  *estimate_field_id
+}
+
+entity Estimate {
+  *id
+  --
+  *name
+  *total_time
+}
+
+entity EstimateLine {
+  *id
+  --
+  *label
+  *time
+  *type
+  *estimate_id
+}
+
+Estimate ||--o{ EstimateLine
+EstimateField ||--o{  EstimatePresetValue
+
+@enduml
