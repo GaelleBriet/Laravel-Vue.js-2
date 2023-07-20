@@ -6,6 +6,10 @@ Mais attention, il va te falloir procéder à quelques étapes avant de pouvoir 
 
 ## Initialisation du back-end
 
+```bash
+cd backend
+```
+
 Pense à lire le fichier `correction-backend.md` pour avoir des informations sur la correction du parcours, avec notamment les détails de l'environnement de développement utilisé avec Docker.
 
 L'important à savoir est que l'environnement peut être lancé avec la commande suivante :

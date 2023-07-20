@@ -32,23 +32,23 @@ Slippers de **13h30 à 14h00** pour débriefer la conception avec ton *Lead Dev*
 
 #### Activités
 
-- [ ] Mettre en place l'environnement de développement avec Docker pour le back-end
-- [ ] Mettre en place le back-end avec Laravel
-  - [ ] Initialiser le projet dans un sous-dossier `backend`
-  - [ ] Créer les **migrations**
-  - [ ] Créer les **models**
-  - [ ] (Bonus : Créer les **relations**)
-  - [ ] Créer les **routes**
-  - [ ] Créer les **controllers** et **méthodes de routes** en retournant uniquement une réponse JSON contenant : `{"name": "nom de la page/route"}`. Rien d'autre en code.
-  - [ ] (Bonus : Créer les **seeders**) 
-- [ ] Mettre en place le front-end avec Vue.js
-  - [ ] Initialiser le projet dans un sous-dossier `frontend`
-  - [ ] Nettoyer les fichiers et code générés pour partir sur une page blanche
-  - [ ] Créer les composants des différentes pages à nu
-  - [ ] Créer les possibles composants communs
-  - [ ] Mettre l'intégration en dur dans les différentes pages
-  - [ ] (Bonus : Réfléchir à quels composants créer pour les champs de formulaire et créer ces composants à nu)
-  - [ ] (Bonus : créer le composant pour les développements supplémentaires)
+- [x] Mettre en place l'environnement de développement avec Docker pour le back-end
+- [x] Mettre en place le back-end avec Laravel
+  - [x] Initialiser le projet dans un sous-dossier `backend`
+  - [x] Créer les **migrations**
+  - [x] Créer les **models**
+  - [x] (Bonus : Créer les **relations**)
+  - [x] Créer les **routes**
+  - [x] Créer les **controllers** et **méthodes de routes** en retournant uniquement une réponse JSON contenant : `{"name": "nom de la page/route"}`. Rien d'autre en code.
+  - [x] (Bonus : Créer les **seeders**) 
+- [x] Mettre en place le front-end avec Vue.js
+  - [x] Initialiser le projet dans un sous-dossier `frontend`
+  - [x] Nettoyer les fichiers et code générés pour partir sur une page blanche
+  - [x] Créer les composants des différentes pages à nu
+  - [x] Créer les possibles composants communs
+  - [x] Mettre l'intégration en dur dans les différentes pages
+  - [x] (Bonus : Réfléchir à quels composants créer pour les champs de formulaire et créer ces composants à nu)
+  - [x] (Bonus : créer le composant pour les développements supplémentaires)
 
 ## Atelier (3j)
 
