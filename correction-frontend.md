@@ -309,3 +309,72 @@ import EstimateForm from "@/views/EstimateForm.vue";
 ```
 
 </details>
+
+## (Optionnel) Et Docker dans tout ça ?
+
+On ne l'a pas mis dans cette correction directement, mais voici un exemple de comment "Dockeriser" l'application côté front-end.
+
+Tout d'abord, on pourrait utiliser une image de Node.js, en version légère avec Alpine, pour écrire un `Dockerfile`.
+
+```Dockerfile
+# Use the official Node.js image as the base.
+FROM node:alpine3.18
+
+# Set the working directory inside the container.
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files to the working directory.
+COPY package*.json ./
+
+# Install dependencies.
+RUN npm install
+
+# Copy the rest of the app's source code.
+COPY ./ ./
+
+# Expose port 5173 for Vite.
+EXPOSE 5173
+
+# Start the development server.
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+````
+
+Le fichier `docker-compose.yml` pourrait ressembler à ceci :
+
+```yml
+version: "3.8"
+services:
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+```
+
+Enfin, avant de lancer l'application au sein d'un conteneur, on va devoir modifier le fichier `vite.config.js` pour que le serveur de développement soit certain de se mettre à jour en cas de modification du code source.
+
+```js
+import { fileURLToPath, URL } from "node:url";
+
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url))
+    }
+  },
+  server: {
+    watch: {
+      usePolling: true,
+    },
+  },
+});
+```

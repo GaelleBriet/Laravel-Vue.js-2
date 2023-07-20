@@ -108,7 +108,7 @@ On va créer un fichier `docker-compose.yml` au sein de notre projet. Celui-ci v
 Le fichier [`docker-compose.yml`](./backend/docker-compose.yml) est commenté afin d'expliquer chaque étape :
 
 ```yaml
-version: "3"
+version: "3.8"
 services:
   api:
     build: .
