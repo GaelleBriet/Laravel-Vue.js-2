@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Tu viens d'arriver dans une petite entreprise en tant que développeur Laravel et Vue.js. L'équipe passe beaucoup de temps à chiffrer des projets*. 
+Tu viens d'arriver dans une petite entreprise en tant que développeur Laravel et Vue.js. L'équipe passe beaucoup de temps à chiffrer des projets. 
 Entre le type de projet, les types de développements, le type de design, les développements très spécifiques, etc, ce n'est pas toujours évident.
 
 Pour te mettre en jambe, ton *Lead Dev* te propose de faire un outil sur mesure pour estimer les temps d'un projet en fonction de ce que souhaitent les clients.
@@ -58,7 +58,7 @@ Génériques:
 - Une page d'accueil : **7h**
 - Une page de type éditorial : **5h**
 - Évènements : **14h**
-- Offres d'emplois : **16**
+- Offres d'emplois : **16h**
 - Blog : **10h**
 
 Additionnels:
