@@ -1,5 +1,5 @@
 @startuml Estimato'r
-!theme sketchy
+!theme vibrant
 
 entity EstimateField {
   *id

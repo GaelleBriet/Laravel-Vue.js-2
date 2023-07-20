@@ -1,5 +1,5 @@
 @startuml Estimato'r
-!theme sketchy
+!theme vibrant
 
 entity EstimateField {
   *id
@@ -36,7 +36,7 @@ entity EstimateLine {
   *estimate_id
 }
 
-Estimate ||--o{ EstimateLine
-EstimateField ||--o{  EstimatePresetValue
+Estimate "Contains (0, N)" -- "Line of (1, 1)" EstimateLine
+EstimateField "Proposes (0, N)" -- "Option for (1, 1)" EstimatePresetValue
 
 @enduml
