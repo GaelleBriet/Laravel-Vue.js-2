@@ -13,7 +13,8 @@ class EstimateController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(["name" => "GET /api/estimates : Liste des estimations."]);
+        $estimates = Estimate::all();
+        return response()->json($estimates);
     }
 
     /**
@@ -21,7 +22,13 @@ class EstimateController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        return response()->json(["name" => "POST /api/estimates : Création d'une estimation."]);
+        //$estimate = Estimate::create($request->all());
+
+        $estimate = new Estimate();
+        $estimate->name = $request->name;
+        $estimate->total_time = $request->total_time;
+        $estimate->save();
+        return response()->json($estimate, 201);
     }
 
     /**
@@ -29,7 +36,8 @@ class EstimateController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        return response()->json(["name" => "GET /api/estimates/{estimate} : Affichage d'une estimation."]);
+        $estimate = Estimate::findOrFail($id);
+        return response()->json($estimate);
     }
 
     /**
@@ -37,7 +45,11 @@ class EstimateController extends Controller
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        return response()->json(["name" => "PUT|PATCH /api/estimates/{estimate} : Mise à jour d'une estimation."]);
+        $estimate = Estimate::find($id);
+        $estimate->name = $request->name;
+        $estimate->total_time = $request->total_time;
+        $estimate->save();
+        return response()->json($estimate);
     }
 
     /**
@@ -45,6 +57,8 @@ class EstimateController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        return response()->json(["name" => "DELETE /api/estimates/{estimate} : Suppression d'une estimation."]);
+        $estimate = Estimate::find($id);
+        $estimate->delete();
+        return response()->json($estimate);
     }
 }

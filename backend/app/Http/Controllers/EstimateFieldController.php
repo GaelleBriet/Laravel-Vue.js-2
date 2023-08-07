@@ -13,15 +13,24 @@ class EstimateFieldController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(["name" => "GET /api/fields : Liste des champs pour l'estimation."]);
+        $estimatesFields = EstimateField::all();
+        return response()->json($estimatesFields);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
-        return response()->json(["name" => "POST /api/fields : Création d'un champ pour l'estimation."]);
+        // $estimateField = EstimateField::create($request->all());
+        // return response()->json($estimateField, 201);
+
+        $estimateField = new EstimateField();
+        $estimateField->name = $request->name;
+        $estimateField->slug = $request->slug;
+        $estimateField->type = $request->type;
+        $estimateField->save();
+        return response()->json($estimateField, 201);
     }
 
     /**
@@ -29,7 +38,8 @@ class EstimateFieldController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        return response()->json(["name" => "GET /api/fields/{field} : Affichage d'un champ pour l'estimation."]);
+        $estimateField = EstimateField::findOrFail($id);
+        return response()->json($estimateField);
     }
 
     /**
@@ -37,7 +47,12 @@ class EstimateFieldController extends Controller
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        return response()->json(["name" => "PUT|PATCH /api/fields/{field} : Mise à jour d'un champ pour l'estimation."]);
+        $estimateField = EstimateField::find($id);
+        $estimateField->name = $request->name;
+        $estimateField->slug = $request->slug;
+        $estimateField->type = $request->type;
+        $estimateField->save();
+        return response()->json($estimateField);
     }
 
     /**
@@ -45,6 +60,8 @@ class EstimateFieldController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        return response()->json(["name" => "DELETE /api/fields/{field} : Suppression d'un champ pour l'estimation."]);
+        $estimateField = EstimateField::findOrFail($id);
+        $estimateField->delete();
+        return response()->json($estimateField);
     }
 }
