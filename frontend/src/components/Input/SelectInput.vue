@@ -5,7 +5,10 @@ import { ref, onMounted } from "vue";
 const props = defineProps({
   projectType: Boolean,
   designType: Boolean,
-  id: Number
+  id: {
+    type: Number,
+    default: 0 // valeur par défaut (eslint)
+  }
 });
 
 const options = ref([]);
