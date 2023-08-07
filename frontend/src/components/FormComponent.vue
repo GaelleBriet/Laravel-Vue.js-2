@@ -1,14 +1,20 @@
-<script setup></script>
+<script setup>
+import TextInput from "../components/Input/TextInput.vue";
+import { ref } from "vue";
+
+const projectName = ref("");
+
+const inputName = name => {
+  projectName.value = name.target.value;
+  console.log(projectName.value);
+};
+</script>
 
 <template>
-
-<form class="estimator-form" action="#">
+  <form class="estimator-form" action="#">
     <div class="errors">Le nom du projet est obligatoire.</div>
 
-    <div class="input-group">
-      <label class="main-label" for="project-name">Nom du projet</label>
-      <input id="project-name" type="text" name="project-name" placeholder="Nom" />
-    </div>
+    <TextInput @input="inputName" />
 
     <div class="input-group">
       <span class="main-label">Type de projet</span>
@@ -75,4 +81,4 @@
   </form>
 </template>
 
-<style></style>
+<style lang="scss" scoped></style>
