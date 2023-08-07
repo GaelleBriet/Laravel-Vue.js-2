@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
 
 const emit = defineEmits("SelectedValues");
 const specificTemplates = ref([]);
 
 const emitValuesToParent = () => {
-  emit("SelectedValues", specificTemplates.value); // Émettre les valeurs saisies au composant parent
+  emit("SelectedValues", specificTemplates.value);
 };
 
 const addSpecificTemplate = () => {
@@ -25,11 +25,11 @@ const removeSpecificTemplate = index => {
       <div v-for="(specificTemplate, index) in specificTemplates" :key="index" class="specific-template">
         <label class="specific-template-name">
           <span class="specific-template-input-prefix">Nom</span>
-          <input v-model="specificTemplate.name" type="text" @input="emitValuesToParent"/>
+          <input v-model="specificTemplate.name" type="text" @input="emitValuesToParent" />
         </label>
 
         <label class="specific-template-time">
-          <input v-model="specificTemplate.time" type="number" @input="emitValuesToParent"/>
+          <input v-model="specificTemplate.time" type="number" @input="emitValuesToParent" />
           <span class="specific-template-input-unit">h</span>
         </label>
 

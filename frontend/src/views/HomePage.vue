@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import TitleComponent from "@/components/TitleComponent.vue";
 import TextInput from "../components/Input/TextInput.vue";
 import SelectInput from "../components/Input/SelectInput.vue";
@@ -7,13 +8,16 @@ import CheckboxInput from "../components/Input/CheckboxInput.vue";
 import CustomTaskInput from "../components/Input/CustomTaskInput.vue";
 import ApiService from "@/services/ApiService.js";
 
+const router = useRouter();
 const projectName = ref("");
 const estimateFields = ref([]);
+const selectedCheckboxes = ref([]);
+const selectValues = ref({});
+const customTaskValues = ref([]);
 
 const fetchEstimateFields = async () => {
   try {
     const data = await ApiService.fetchAll("fields");
-    console.log(data);
     estimateFields.value = data;
   } catch (error) {
     console.error(error);
@@ -23,25 +27,37 @@ fetchEstimateFields();
 
 const handleInputUpdate = name => {
   projectName.value = name.target.value;
-  console.log(projectName.value);
 };
 
-const handleSelectedValue = value => {
-  console.log("Valeur du select:", value);
+const handleSelectedValue = (value, fieldSlug) => {
+  selectValues.value[fieldSlug] = value;
 };
 
 const handleCheckboxChange = selectedValues => {
-  console.log("Checkboxes sélectionnées :", selectedValues);
+  selectedCheckboxes.value = selectedValues;
 };
 
-const handleValuesSelected = values => {
-  console.log("Valeurs des custom inputs :", values);
+const handleCustomValues = values => {
+  customTaskValues.value = values;
+};
+
+const handleSubmit = () => {
+  console.log("project name :", projectName.value);
+
+  console.log("Select Values:", selectValues.value);
+
+  const selectedCheckboxesArray = [...selectedCheckboxes.value];
+  console.log("Checkboxes sélectionnées  :", selectedCheckboxesArray);
+
+  console.log("Custom Task Values:", customTaskValues.value);
+
+  router.push("/details");
 };
 </script>
 
 <template>
   <TitleComponent title="Calculato'r" />
-  <form class="estimator-form" action="#">
+  <form class="estimator-form" @submit.prevent="handleSubmit">
     <div v-if="!projectName" class="errors">Le nom du projet est obligatoire.</div>
 
     <template v-for="field in estimateFields" :key="field.id">
@@ -58,7 +74,7 @@ const handleValuesSelected = values => {
       </template>
 
       <template v-if="field.slug === 'developpements-supplementaires'">
-        <CustomTaskInput @selected-values="handleValuesSelected" />
+        <CustomTaskInput @selected-values="handleCustomValues" />
       </template>
 
       <template v-if="field.slug === 'type-de-design'">
