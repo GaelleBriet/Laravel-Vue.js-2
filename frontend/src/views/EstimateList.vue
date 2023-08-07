@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+  import TitleComponent from "@/components/TitleComponent.vue";
+</script>
 
 <template>
-  <h1 class="main-title">Dernières estimations</h1>
+  <TitleComponent title="Dernières estimations" />
   <ul class="estimate-list">
     <li>
       <routerLink to="/details" class="estimate-card">
