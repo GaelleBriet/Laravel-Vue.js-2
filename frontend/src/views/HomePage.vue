@@ -25,6 +25,10 @@ const fetchEstimateFields = async () => {
   }
 };
 fetchEstimateFields();
+
+const handleCheckboxChange = selectedValues => {
+  console.log("Checkboxes sélectionnées :", selectedValues);
+};
 </script>
 
 <template>
@@ -42,7 +46,7 @@ fetchEstimateFields();
       </template>
 
       <template v-if="field.slug === 'developpements-generiques'">
-        <CheckboxInput />
+        <CheckboxInput :id="field.id" @checkbox-change="handleCheckboxChange" />
       </template>
 
       <template v-if="field.slug === 'developpements-supplementaires'">

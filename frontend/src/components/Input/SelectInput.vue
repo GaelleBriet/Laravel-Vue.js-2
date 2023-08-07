@@ -12,11 +12,11 @@ const props = defineProps({
 });
 
 const options = ref([]);
+
 onMounted(async () => {
   try {
-    const fieldResponse = await ApiService.fetchFieldValues(props.id);
-
-    options.value = fieldResponse.values.map(value => ({
+    const fieldValues = await ApiService.fetchFieldValues(props.id);
+    options.value = fieldValues.values.map(value => ({
       label: value.label,
       value: value.value
     }));
