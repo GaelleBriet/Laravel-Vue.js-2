@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estimate;
+use App\Models\EstimateLine;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -22,13 +23,18 @@ class EstimateController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        //$estimate = Estimate::create($request->all());
+        // $estimate = new Estimate();
+        // $estimate->name = $request->name;
+        // $estimate->total_time = $request->total_time;
+        // $estimate->save();
+        // return response()->json($estimate, 201);
 
         $estimate = new Estimate();
         $estimate->name = $request->name;
         $estimate->total_time = $request->total_time;
         $estimate->save();
-        return response()->json($estimate, 201);
+        dd($estimate);
+        // return response()->json($estimate, 201);
     }
 
     /**

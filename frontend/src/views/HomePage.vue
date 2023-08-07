@@ -23,7 +23,6 @@ const handleInputUpdate = name => {
 
 const handleSelectedValue = (value, fieldSlug) => {
   selectValues.value[fieldSlug] = value;
-  console.log(selectValues.value[fieldSlug]);
 };
 
 const handleCheckboxChange = selectedValues => {
