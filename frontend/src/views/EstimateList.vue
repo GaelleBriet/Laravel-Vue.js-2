@@ -4,10 +4,10 @@
   <h1 class="main-title">Dernières estimations</h1>
   <ul class="estimate-list">
     <li>
-      <a href="#" class="estimate-card">
+      <routerLink to="/details" class="estimate-card">
         <span class="project-name">O'clock</span>
         <span class="project-time">35h</span>
-      </a>
+      </routerLink>
     </li>
     <li>
       <a href="#" class="estimate-card">

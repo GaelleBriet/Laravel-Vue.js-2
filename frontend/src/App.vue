@@ -1,12 +1,10 @@
 <script setup>
 import BaseLayout from "@/components/BaseLayout.vue";
-import EstimateForm from "@/views/EstimateForm.vue";
 </script>
 
 <template>
-  <BaseLayout>
-    <EstimateForm />
-  </BaseLayout>
+  <BaseLayout />
+  <RouterView />
 </template>
 
 <style scoped></style>

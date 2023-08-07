@@ -6,17 +6,15 @@
     <nav class="main-nav">
       <ul>
         <li>
-          <a href=".#"> Calculato'r </a>
+          <routerLink to="/"> Calculato'r </routerLink>
         </li>
         <li>
-          <a href="#"> Dernières estimations </a>
+          <routerLink to="/list"> Dernières estimations </routerLink>
         </li>
       </ul>
     </nav>
   </header>
-  <main class="main-content">
-    <slot></slot>
-  </main>
+  <main class="main-content"></main>
   <footer></footer>
 </template>
 
