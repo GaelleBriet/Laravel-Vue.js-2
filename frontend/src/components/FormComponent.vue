@@ -1,5 +1,6 @@
 <script setup>
 import TextInput from "../components/Input/TextInput.vue";
+import SelectInput from "../components/Input/SelectInput.vue";
 import { ref } from "vue";
 
 const projectName = ref("");
@@ -16,15 +17,7 @@ const inputName = name => {
 
     <TextInput @input="inputName" />
 
-    <div class="input-group">
-      <span class="main-label">Type de projet</span>
-
-      <select name="project-type">
-        <option value="">Choisir un type de projet</option>
-        <option value="simple">Laravel</option>
-        <option value="complex">Laravel et Vue.js</option>
-      </select>
-    </div>
+    <SelectInput project-type />
 
     <div class="input-group">
       <span class="main-label">Développement génériques</span>
@@ -66,16 +59,7 @@ const inputName = name => {
       <button id="addSpecificTemplate" class="button button-icon" type="button"><i class="fa fa-plus"></i></button>
     </div>
 
-    <div class="input-group">
-      <span class="main-label">Type de design</span>
-
-      <select name="design-type">
-        <option value="">Choisir un type de design</option>
-        <option value="simple">Design simple</option>
-        <option value="complex">Design complexe</option>
-        <option value="animations">Design complexe avec animations</option>
-      </select>
-    </div>
+    <SelectInput design-type />
 
     <button type="submit" class="button">Obtenir l'estimation</button>
   </form>
