@@ -1,15 +1,14 @@
 <script setup>
-  import TitleComponent from "@/components/TitleComponent.vue";
-  import EstimateCardList from "@/components/EstimateCard/EstimateCardList.vue"
-  import { computed, onMounted } from 'vue';
-  import { useEstimateStore } from "@/stores/EstimateStore.js";
+import TitleComponent from "@/components/TitleComponent.vue";
+import EstimateCardList from "@/components/EstimateCard/EstimateCardList.vue";
+import { computed, onMounted } from "vue";
+import { useEstimateStore } from "@/stores/EstimateStore.js";
 
-  const store = useEstimateStore();
+const store = useEstimateStore();
 
-  onMounted(async () => {
-    await store.fetchEstimates();
-  });
-
+onMounted(async () => {
+  await store.fetchEstimates();
+});
 </script>
 
 <template>

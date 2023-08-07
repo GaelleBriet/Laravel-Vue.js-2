@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 
-const emit = defineEmits("SelectedValues");
+const emit = defineEmits(["SelectedValues"]);
 const specificTemplates = ref([]);
 
 const emitValuesToParent = () => {

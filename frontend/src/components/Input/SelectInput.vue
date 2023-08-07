@@ -1,6 +1,6 @@
 <script setup>
-import ApiService from "@/services/ApiService.js";
 import { ref, onMounted } from "vue";
+import { useEstimateField } from "@/stores/EstimateFieldsStore.js";
 
 const props = defineProps({
   projectType: Boolean,
@@ -15,6 +15,14 @@ const props = defineProps({
   }
 });
 
+const emitSelectedValue = () => {
+  if (selectedValue.value) {
+    // Émettre l'événement personnalisé avec la valeur sélectionnée
+    emit("selected", selectedValue.value, props.slug);
+  }
+};
+
+const estimateFieldStore = useEstimateField();
 const emit = defineEmits(["selected"]);
 
 const selectedValue = ref("");
@@ -22,7 +30,7 @@ const options = ref([]);
 
 onMounted(async () => {
   try {
-    const fieldValues = await ApiService.fetchFieldValues(props.id);
+    const fieldValues = await estimateFieldStore.fectchFieldValues(props.id);
     options.value = fieldValues.values.map(value => ({
       label: value.label,
       value: value.value
@@ -31,13 +39,6 @@ onMounted(async () => {
     console.error(error);
   }
 });
-
-const emitSelectedValue = () => {
-  if (selectedValue.value) {
-    // Émettre l'événement personnalisé avec la valeur sélectionnée
-    emit("selected", selectedValue.value, props.slug);
-  }
-};
 </script>
 <template>
   <div class="input-group">

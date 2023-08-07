@@ -1,29 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import TitleComponent from "@/components/TitleComponent.vue";
 import TextInput from "../components/Input/TextInput.vue";
 import SelectInput from "../components/Input/SelectInput.vue";
 import CheckboxInput from "../components/Input/CheckboxInput.vue";
 import CustomTaskInput from "../components/Input/CustomTaskInput.vue";
-import ApiService from "@/services/ApiService.js";
+import { useEstimateField } from "@/stores/EstimateFieldsStore.js";
 
 const router = useRouter();
+const estimateFieldStore = useEstimateField();
+const estimateFields = estimateFieldStore.estimateFields;
+
 const projectName = ref("");
-const estimateFields = ref([]);
 const selectedCheckboxes = ref([]);
 const selectValues = ref({});
 const customTaskValues = ref([]);
-
-const fetchEstimateFields = async () => {
-  try {
-    const data = await ApiService.fetchAll("fields");
-    estimateFields.value = data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-fetchEstimateFields();
 
 const handleInputUpdate = name => {
   projectName.value = name.target.value;
@@ -54,6 +46,10 @@ const handleSubmit = () => {
 
   router.push("/details");
 };
+
+onMounted(async () => {
+  await estimateFieldStore.fetchEstimateFields();
+});
 </script>
 
 <template>
