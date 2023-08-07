@@ -36,7 +36,7 @@ class EstimateController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $estimate = Estimate::findOrFail($id);
+        $estimate = Estimate::with('lines')->findOrFail($id);
         return response()->json($estimate);
     }
 
