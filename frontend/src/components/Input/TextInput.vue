@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const item = ref("");
+</script>
 
 <template>
   <div class="input-group">

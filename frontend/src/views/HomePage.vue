@@ -34,17 +34,36 @@ const handleCustomValues = values => {
   customTaskValues.value = values;
 };
 
-const handleSubmit = () => {
-  console.log("project name :", projectName.value);
+// const handleSubmit = () => {
+//   console.log("project name :", projectName.value);
 
-  console.log("Select Values:", selectValues.value);
+//   console.log("Select Values:", selectValues.value);
 
-  const selectedCheckboxesArray = [...selectedCheckboxes.value];
-  console.log("Checkboxes sélectionnées  :", selectedCheckboxesArray);
+//   const selectedCheckboxesArray = [...selectedCheckboxes.value];
+//   console.log("Checkboxes sélectionnées  :", selectedCheckboxesArray);
 
-  console.log("Custom Task Values:", customTaskValues.value);
+//   console.log("Custom Task Values:", customTaskValues.value);
 
-  router.push("/details");
+//   router.push("/details");
+// };
+
+const handleSubmit = async () => {
+  try {
+    const estimateData = {
+      name: projectName.value,
+      // total_time: calculateTotalTime()
+      total_time: 123
+    };
+
+    const createdEstimate = await estimateFieldStore.create("estimates", estimateData);
+
+    console.log("Estimate created:", createdEstimate);
+    // Réinitialisez les valeurs du formulaire ou effectuez d'autres actions nécessaires
+
+    router.push("/details");
+  } catch (error) {
+    console.error("Error creating estimate:", error);
+  }
 };
 
 onMounted(async () => {

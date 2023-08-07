@@ -26,9 +26,20 @@ export const useEstimateField = defineStore("estimateField", () => {
     }
   }
 
+  async function create(type, data) {
+    try {
+      const responseData = await ApiService.create(type, data);
+      return responseData;
+    } catch (error) {
+      console.error(error);
+      throw new Error(`Failed to create resource of type: ${type}`);
+    }
+  }
+
   return {
     estimateFields,
     fetchEstimateFields,
-    fectchFieldValues
+    fectchFieldValues,
+    create
   };
 });
