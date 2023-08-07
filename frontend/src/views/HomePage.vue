@@ -31,6 +31,7 @@ const handleInputUpdate = name => {
 
 const handleSelectedValue = (value, fieldSlug) => {
   selectValues.value[fieldSlug] = value;
+  console.log(selectValues.value[fieldSlug]);
 };
 
 const handleCheckboxChange = selectedValues => {
@@ -66,7 +67,7 @@ const handleSubmit = () => {
       </template>
 
       <template v-if="field.slug === 'technologies'">
-        <SelectInput :id="field.id" project-type @selected="handleSelectedValue" />
+        <SelectInput :id="field.id" :slug="field.slug" project-type @selected="handleSelectedValue" />
       </template>
 
       <template v-if="field.slug === 'developpements-generiques'">
@@ -78,7 +79,7 @@ const handleSubmit = () => {
       </template>
 
       <template v-if="field.slug === 'type-de-design'">
-        <SelectInput :id="field.id" design-type @selected="handleSelectedValue" />
+        <SelectInput :id="field.id" :slug="field.slug" design-type @selected="handleSelectedValue" />
       </template>
     </template>
 

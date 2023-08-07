@@ -8,6 +8,10 @@ const props = defineProps({
   id: {
     type: Number,
     default: 0 // valeur par défaut (eslint)
+  },
+  slug: {
+    type: String,
+    default: ""
   }
 });
 
@@ -31,7 +35,7 @@ onMounted(async () => {
 const emitSelectedValue = () => {
   if (selectedValue.value) {
     // Émettre l'événement personnalisé avec la valeur sélectionnée
-    emit("selected", selectedValue.value);
+    emit("selected", selectedValue.value, props.slug);
   }
 };
 </script>
@@ -39,7 +43,11 @@ const emitSelectedValue = () => {
   <div class="input-group">
     <span class="main-label">{{ projectType ? "Type de projet" : "Type de design" }}</span>
 
-    <select v-model="selectedValue" :name="projectType ? 'project-type' : 'design-type'" @change="emitSelectedValue">
+    <select
+      v-model="selectedValue"
+      :name="projectType ? 'project-type' : 'design-type'"
+      @change="emitSelectedValue(fieldSlug)"
+    >
       <option value="">Choisir un {{ projectType ? "type de projet" : "type de design" }}</option>
       <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
     </select>
