@@ -61,15 +61,24 @@ const handleSubmit = async () => {
         field.slug === "developpements-generiques" ||
         field.slug === "type-de-design"
       ) {
-        const lineData = {
-          label: field.slug,
-          time: 0,
-          type: "general"
-        };
-        estimateLines.push(lineData);
+        let selectedValue = "";
+        if (field.slug === "technologies" && selectValues.value[field.slug]) {
+          selectedValue = selectValues.value[field.slug];
+        } else if (field.slug === "developpements-generiques" && selectedCheckboxes.value.length > 0) {
+          selectedValue = selectedCheckboxes.value.join(", ");
+        } else if (field.slug === "type-de-design" && selectValues.value[field.slug]) {
+          selectedValue = selectValues.value[field.slug];
+        }
+        if (selectedValue) {
+          const lineData = {
+            label: selectedValue,
+            time: 0,
+            type: "general"
+          };
+          estimateLines.push(lineData);
+        }
       }
     }
-
     // Ajouter les estimate_lines aux données d'estimation
     estimateData.estimate_lines = estimateLines;
 

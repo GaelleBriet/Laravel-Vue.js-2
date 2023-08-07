@@ -32,9 +32,22 @@ class EstimateController extends Controller
         $estimate = new Estimate();
         $estimate->name = $request->name;
         $estimate->total_time = $request->total_time;
+
         $estimate->save();
-        dd($estimate);
-        // return response()->json($estimate, 201);
+
+
+        $estimateLinesData = $request->input('estimate_lines', []);
+        foreach ($estimateLinesData as $lineData) {
+            $estimateLine = new EstimateLine();
+            $estimateLine->label = $lineData['label'];
+            $estimateLine->time = $lineData['time'];
+            $estimateLine->type = $lineData['type'];
+
+            $estimate->lines()->save($estimateLine);
+        }
+
+
+        return response()->json($estimate, 201);
     }
 
     /**
