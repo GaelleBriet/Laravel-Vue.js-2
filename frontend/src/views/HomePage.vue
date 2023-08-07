@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import TitleComponent from "@/components/TitleComponent.vue";
 import TextInput from "../components/Input/TextInput.vue";
 import SelectInput from "../components/Input/SelectInput.vue";
@@ -9,11 +9,6 @@ import ApiService from "@/services/ApiService.js";
 
 const projectName = ref("");
 const estimateFields = ref([]);
-
-const inputName = name => {
-  projectName.value = name.target.value;
-  console.log(projectName.value);
-};
 
 const fetchEstimateFields = async () => {
   try {
@@ -26,23 +21,36 @@ const fetchEstimateFields = async () => {
 };
 fetchEstimateFields();
 
+const handleInputUpdate = name => {
+  projectName.value = name.target.value;
+  console.log(projectName.value);
+};
+
+const handleSelectedValue = value => {
+  console.log("Valeur du select:", value);
+};
+
 const handleCheckboxChange = selectedValues => {
   console.log("Checkboxes sélectionnées :", selectedValues);
+};
+
+const handleValuesSelected = values => {
+  console.log("Valeurs des custom inputs :", values);
 };
 </script>
 
 <template>
   <TitleComponent title="Calculato'r" />
   <form class="estimator-form" action="#">
-    <div class="errors">Le nom du projet est obligatoire.</div>
+    <div v-if="!projectName" class="errors">Le nom du projet est obligatoire.</div>
 
     <template v-for="field in estimateFields" :key="field.id">
       <template v-if="field.slug === 'nom-du-projet'">
-        <TextInput @input="inputName" />
+        <TextInput @input="handleInputUpdate" />
       </template>
 
       <template v-if="field.slug === 'technologies'">
-        <SelectInput :id="field.id" project-type />
+        <SelectInput :id="field.id" project-type @selected="handleSelectedValue" />
       </template>
 
       <template v-if="field.slug === 'developpements-generiques'">
@@ -50,11 +58,11 @@ const handleCheckboxChange = selectedValues => {
       </template>
 
       <template v-if="field.slug === 'developpements-supplementaires'">
-        <CustomTaskInput />
+        <CustomTaskInput @selected-values="handleValuesSelected" />
       </template>
 
       <template v-if="field.slug === 'type-de-design'">
-        <SelectInput :id="field.id" design-type />
+        <SelectInput :id="field.id" design-type @selected="handleSelectedValue" />
       </template>
     </template>
 

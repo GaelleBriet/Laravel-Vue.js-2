@@ -11,6 +11,9 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(["selected"]);
+
+const selectedValue = ref("");
 const options = ref([]);
 
 onMounted(async () => {
@@ -24,12 +27,19 @@ onMounted(async () => {
     console.error(error);
   }
 });
+
+const emitSelectedValue = () => {
+  if (selectedValue.value) {
+    // Émettre l'événement personnalisé avec la valeur sélectionnée
+    emit("selected", selectedValue.value);
+  }
+};
 </script>
 <template>
   <div class="input-group">
     <span class="main-label">{{ projectType ? "Type de projet" : "Type de design" }}</span>
 
-    <select :name="projectType ? 'project-type' : 'design-type'">
+    <select v-model="selectedValue" :name="projectType ? 'project-type' : 'design-type'" @change="emitSelectedValue">
       <option value="">Choisir un {{ projectType ? "type de projet" : "type de design" }}</option>
       <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
     </select>
