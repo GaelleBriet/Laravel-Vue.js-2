@@ -1,9 +1,10 @@
 <script setup>
 import FormComponent from "../components/FormComponent.vue";
+import TitleComponent from "@/components/TitleComponent.vue";
 </script>
 
 <template>
-  <h1 class="main-title">Calculato'r</h1>
+  <TitleComponent title="Calculato'r" />
   <FormComponent />
 </template>
 

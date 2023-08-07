@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+  import TitleComponent from "@/components/TitleComponent.vue";
+</script>
 
 <template>
-  <h1 class="main-title">Résultat de l'estimation</h1>
+  <TitleComponent title="Résultat de l'estimation" />
   <p class="project-name">Estimations de temps pour le projet : O'clock</p>
   <table class="table-result">
     <thead>
