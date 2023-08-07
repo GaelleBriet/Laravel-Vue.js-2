@@ -17,7 +17,7 @@ const router = createRouter({
       component: EstimateList
     },
     {
-      path: "/details",
+      path: "/details/:id",
       name: "details",
       component: EstimateDetails
     }
