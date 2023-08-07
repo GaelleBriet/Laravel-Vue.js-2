@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EstimateField;
+use App\Models\EstimateFieldValue;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,7 @@ class EstimateFieldController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $estimateField = EstimateField::findOrFail($id);
+        $estimateField = EstimateField::with('values')->findOrFail($id);
         return response()->json($estimateField);
     }
 
