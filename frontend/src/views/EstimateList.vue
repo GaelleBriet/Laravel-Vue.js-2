@@ -1,11 +1,10 @@
 <script setup>
   import TitleComponent from "@/components/TitleComponent.vue";
+  import EstimateCardList from "@/components/EstimateCard/EstimateCardList.vue"
   import { computed, onMounted } from 'vue';
-  import { useEstimateStore } from "@/stores/estimateStore.js";
+  import { useEstimateStore } from "@/stores/EstimateStore.js";
 
   const store = useEstimateStore();
-
-  const estimates = computed(() => (Object.keys(store.estimates).length ? store.estimates : null));
 
   onMounted(async () => {
     await store.fetchEstimates();
@@ -16,12 +15,7 @@
 <template>
   <TitleComponent title="Dernières estimations" />
   <ul class="estimate-list">
-    <li v-for="estimate in estimates">
-      <routerLink to="/details" class="estimate-card"> <!-- {{estimate.id}} -->
-        <span class="project-name">{{estimate.name}}</span>
-        <span class="project-time">{{estimate.total_time}}h</span>
-      </routerLink>
-    </li>
+    <EstimateCardList :estimates="store.estimates" :loading="store.loading" />
   </ul>
 </template>
 

@@ -223,6 +223,13 @@ input:checked + label::before {
   padding: 15px;
 }
 
+.errors.center {
+  background: #ff7675;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
 /* Result page */
 .table-result {
   width: 100%;
