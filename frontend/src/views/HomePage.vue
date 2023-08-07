@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+  import TitleComponent from "@/components/TitleComponent.vue";
+</script>
 
 <template>
-  <h1 class="main-title">Calculato'r</h1>
+  <TitleComponent title="Calculato'r" />
   <form class="estimator-form" action="#">
     <div class="errors">Le nom du projet est obligatoire.</div>
 
