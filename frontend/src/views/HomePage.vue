@@ -55,10 +55,28 @@ const handleSubmit = async () => {
       total_time: 123
     };
 
+    const estimateLines = [];
+    for (const field of estimateFields) {
+      if (
+        field.slug === "technologies" ||
+        field.slug === "developpements-generiques" ||
+        field.slug === "type-de-design"
+      ) {
+        const lineData = {
+          label: field.slug,
+          time: 0,
+          type: "general"
+        };
+        estimateLines.push(lineData);
+      }
+    }
+
+    // Ajouter les estimate_lines aux données d'estimation
+    estimateData.estimate_lines = estimateLines;
+
     const createdEstimate = await estimateFieldStore.create("estimates", estimateData);
 
     console.log("Estimate created:", createdEstimate);
-    // Réinitialisez les valeurs du formulaire ou effectuez d'autres actions nécessaires
 
     router.push("/details");
   } catch (error) {
