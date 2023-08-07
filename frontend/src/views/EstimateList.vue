@@ -1,5 +1,18 @@
 <script setup>
 import TitleComponent from "@/components/TitleComponent.vue";
+import ApiService from "@/services/ApiService.js";
+
+const fetchEstimate = async () => {
+  try {
+    const data = await ApiService.fetchAll("estimates");
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+fetchEstimate();
 </script>
 
 <template>
