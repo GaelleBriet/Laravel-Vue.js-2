@@ -31,20 +31,8 @@ const handleCheckboxChange = selectedValues => {
 
 const handleCustomValues = values => {
   customTaskValues.value = values;
+  console.log(customTaskValues.value);
 };
-
-// const handleSubmit = () => {
-//   console.log("project name :", projectName.value);
-
-//   console.log("Select Values:", selectValues.value);
-
-//   const selectedCheckboxesArray = [...selectedCheckboxes.value];
-//   console.log("Checkboxes sélectionnées  :", selectedCheckboxesArray);
-
-//   console.log("Custom Task Values:", customTaskValues.value);
-
-//   router.push("/details");
-// };
 
 const handleSubmit = async () => {
   try {
@@ -59,21 +47,29 @@ const handleSubmit = async () => {
       if (
         field.slug === "technologies" ||
         field.slug === "developpements-generiques" ||
+        field.slug === "developpements-supplementaires" ||
         field.slug === "type-de-design"
       ) {
         let selectedValue = "";
+
         if (field.slug === "technologies" && selectValues.value[field.slug]) {
           selectedValue = selectValues.value[field.slug];
         } else if (field.slug === "developpements-generiques" && selectedCheckboxes.value.length > 0) {
           selectedValue = selectedCheckboxes.value.join(", ");
+        } else if (field.slug === "developpements-supplementaires" && customTaskValues.value.length > 0) {
+          selectedValue = customTaskValues.value.map(template => `${template.name} (${template.time}h)`).join(", ");
         } else if (field.slug === "type-de-design" && selectValues.value[field.slug]) {
           selectedValue = selectValues.value[field.slug];
         }
+
         if (selectedValue) {
+          const type =
+            field.slug === "developpements-supplementaires" || field.slug === "type-de-design" ? "specific" : "general";
+          // const time = calculateTime(selectedValue);
           const lineData = {
             label: selectedValue,
             time: 0,
-            type: "general"
+            type: type
           };
           estimateLines.push(lineData);
         }
@@ -86,7 +82,8 @@ const handleSubmit = async () => {
 
     console.log("Estimate created:", createdEstimate);
 
-    router.push("/details");
+    router.push("/details/");
+    // router.push(`/details/${createdEstimate.id}`);
   } catch (error) {
     console.error("Error creating estimate:", error);
   }
