@@ -14,7 +14,7 @@ onMounted(async () => {
 <template>
   <TitleComponent title="Dernières estimations" />
   <ul class="estimate-list">
-    <EstimateCardList :estimates="store.estimates" :loading="store.loading" />
+    <EstimateCardList :estimates="store.estimates" :loading="store.loadingEstimates" />
   </ul>
 </template>
 
