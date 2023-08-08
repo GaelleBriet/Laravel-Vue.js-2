@@ -16,7 +16,7 @@
   <template v-if="loading === false">
     <p class="errors center">Chargement des données</p>
   </template>
-  <template v-else-if="loading === true && estimates.length === 0">
+  <template v-else-if="loading === true && estimates.length == 0">
     <p class="errors center">Pas de données</p>
   </template>
   <template v-else>

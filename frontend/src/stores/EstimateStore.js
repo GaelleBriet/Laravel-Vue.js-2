@@ -8,6 +8,8 @@ export const useEstimateStore = defineStore("estimate", () => {
     const loadingEstimates = ref(false);
 
     const estimate = reactive({});
+    const estimateLineGeneral = reactive([]);
+    const estimateLineSpecial = reactive([]);
     const loadingEstimate = ref(false);
 
     async function fetchEstimates() {
@@ -17,12 +19,16 @@ export const useEstimateStore = defineStore("estimate", () => {
             loadingEstimates.value = true;
         } catch (error) {
             console.error(error);
+            Object.assign(estimates, null);
+            loadingEstimates.value = true;
         }
     }
 
     async function fetchEstimate(id) {
         try {
             const data = await ApiService.fetchOne('estimates', id);
+            Object.assign(estimateLineGeneral, await data.lines.filter(lines => lines.type === 'general'));
+            Object.assign(estimateLineSpecial, await data.lines.filter(lines => lines.type === 'special'));
             Object.assign(estimate, await data);
             loadingEstimate.value = true;
         } catch (error) {
@@ -36,6 +42,8 @@ export const useEstimateStore = defineStore("estimate", () => {
         estimates,
         loadingEstimates,
         estimate,
+        estimateLineGeneral,
+        estimateLineSpecial,
         loadingEstimate,
         fetchEstimates,
         fetchEstimate,
