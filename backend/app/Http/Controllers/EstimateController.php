@@ -25,115 +25,85 @@ class EstimateController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        // $estimate = new Estimate();
-        // $estimate->name = $request->name;
-        // $estimate->total_time = $request->total_time;
-        // $estimate->save();
-        // return response()->json($estimate, 201);
-
         $form = $request->all();
-
-        // dd($form);
-
-        // dd($form);
 
         $fields = EstimateField::all();
 
         $lines = [];
         $estimate = new Estimate();
+        // on initialise le temps total à 0
+        $estimate->total_time = 0;
 
         foreach ($fields as $field) {
             if ($field->slug == "nom-du-projet") {
                 $estimate->name = $form["nom-du-projet"];
             }
-            if ($field->type == "select") {
+
+            // on initialise le time et le % supplémentaire à 0
+            $time = 0;
+            $percentage = 0;
+
+            if ($field->type == "select" && isset($form[$field->slug])) {
                 // var_dump($form[$field->slug]);
                 $value = $form[$field->slug];
                 $preset = $field->values()->where("value", $value)->get();
-                $time = $preset[0]['startup_time'] ? $preset[0]['startup_time'] : $preset[0]['total_percentage'];
+                // $time = $preset[0]['startup_time'] ? $preset[0]['startup_time'] : $preset[0]['total_percentage'];
 
+
+                if ($form[$field->slug] === 'laravel') {
+                    // si nous avons un projet laravel nous transformons le temps prévu de minutes en heures
+                    $time = $preset[0]['startup_time'] / 60;
+                } elseif ($form[$field->slug] === 'laravel-et-vuejs') {
+                    // si c'est un projet laravel et vue nous transformons le temps prévu de minutes en heures et récupérons le % à ajouter à la fin
+                    $time = $preset[0]['startup_time'] / 60;
+                    $percentage = $preset[0]['total_percentage'];
+                } else {
+                    // sinon nous n'avons qu'un % supplémentaire à récupérer
+                    $percentage = $preset[0]['total_percentage'];
+                }
+
+                // traitement pour afficher el etxte dans le tableau de la page /details
                 if ($form[$field->slug] === 'laravel' || $form[$field->slug] === 'laravel-et-vuejs') {
                     $label = "Type de projet : " . $preset[0]["label"];
                 } else {
                     $label = "Type de design : " . $preset[0]["label"];
                 }
 
+                // informationsde la ligne à créer
                 $lines[] = ["label" => $label, "type" => "specific", "time" => $time];
+
+                // on ajoute au temps total les temps simplss sans % supp.
+                $estimate->total_time += $time;
             }
-            if ($field->type == "checkbox") {
+
+            if ($field->type == "checkbox"  && isset($form[$field->slug])) {
 
                 foreach ($form[$field->slug] as $formField) {
                     $value = $formField;
                     $preset = $field->values()->where("value", $value)->get();
-                    $time = $preset[0]["time"];
+
+                    // on modifie le temps de minutes en heures
+                    $time = $preset[0]["time"] / 60;
+
                     $lines[] = ["label" => $preset[0]["label"], "type" => "general", "time" => $time];
+
+                    // on ajoute au temps total les temps simples
                 }
             }
-            if ($field->type == "custom") {
+
+            if ($field->type == "custom" && isset($form[$field->slug])) {
 
                 foreach ($form[$field->slug] as $formField) {
                     $lines[] = ["label" => $formField["name"], "type" => "general", "time" => $formField["time"]];
+
+                    $estimate->total_time += $formField["time"];
                 }
             }
         }
-
-
-        $estimate->total_time = 120;
 
         $estimate->save();
 
         $estimate->lines()->createMany($lines);
-
-        // dd($lines);
-        $estimate->save();
-
-        // dd($estimate);
-
-
-
-        // $value = $form[$field->slug];
-        // $preset = $field->values()->where("value", $value)->get();
-        // $time = $preset->time ?? $preset->startup_time;
-        // $lines[] = ["label" => $field->name, "type" => "general", "time" => $time];
-
-
-
-
-        // $estimateLinesData = $request->input('estimate_lines', []);
-        // foreach ($estimateLinesData as $lineData) {
-        //     $estimateLine = new EstimateLine();
-        //     $estimateLine->label = $lineData['label'];
-        //     $estimateLine->time = $lineData['time'];
-        //     $estimateLine->type = $lineData['type'];
-        //     if (
-        //         $lineData['label'] === "page-daccueil" ||
-        //         $lineData['label'] === "evenement" ||
-        //         $lineData['label'] === "page-de-type-editoriale" ||
-        //         $lineData['label'] === "offres-demplois" ||
-        //         $lineData['label'] === "blog"
-        //     ) {
-        //         $estimateFieldValue = EstimateFieldValue::where('value',  $lineData['label'])->first();
-        //         $estimateLine->time = $estimateFieldValue->time;
-        //     }
-        //     $estimate->lines()->save($estimateLine);
-        // }
-
-        /*
-        $fields = EstimateField:all();
-        $lines = []
-        foreach ($fields as $field) {
-            if ($field->slug == "nom-du-projet") {
-                $name = $form["nom-du-projet"];
-            }
-            if ($field->type == "select") {
-                $value = $form[$field->slug];
-                $preset = $field->values()->where("value", "=", $value)->get();
-                $time = $preset->time ?? $preset->startup_time;
-                $lines[] = ["label" => $field->name, $type => "general", "time" => $time]
-            }
-        }
-        */
-
 
         return response()->json($estimate, 201);
     }
