@@ -2,20 +2,14 @@
 import ApiService from "@/services/ApiService.js";
 import { ref, onMounted } from "vue";
 
-// const checkboxes = [
-//   { name: "Homepage", id: "homepage" },
-//   { name: "Page de contact", id: "page-de-contact" },
-//   { name: "Blog", id: "blog" },
-//   { name: "Boutique", id: "boutique" },
-//   { name: "Page éditorial", id: "editorial" },
-//   { name: "Évènements", id: "evnements" },
-//   { name: "Offres d'emplois", id: "module-meteo" }
-// ];
-
 const props = defineProps({
   id: {
     type: Number,
     default: 0 // valeur par défaut (eslint)
+  },
+  slug: {
+    type: String,
+    default: ""
   }
 });
 
@@ -43,7 +37,8 @@ const handleCheckboxChange = (event, checkboxValue) => {
     checkbox.checked = event.target.checked;
     emit(
       "checkboxChange",
-      checkboxes.value.filter(item => item.checked).map(item => item.value)
+      checkboxes.value.filter(item => item.checked).map(item => item.value),
+      props.slug
     );
   }
 };

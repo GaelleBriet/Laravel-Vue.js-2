@@ -3,13 +3,15 @@ import { ref, onMounted } from "vue";
 import { useEstimateField } from "@/stores/EstimateFieldsStore.js";
 
 const props = defineProps({
-  projectType: Boolean,
-  designType: Boolean,
   id: {
     type: Number,
     default: 0 // valeur par défaut (eslint)
   },
   slug: {
+    type: String,
+    default: ""
+  },
+  name: {
     type: String,
     default: ""
   }
@@ -42,14 +44,13 @@ onMounted(async () => {
 </script>
 <template>
   <div class="input-group">
-    <span class="main-label">{{ projectType ? "Type de projet" : "Type de design" }}</span>
+    <span v-if="name === 'Technologies'" class="main-label">Type de projet</span>
+    <span v-else class="main-label">Type de Design</span>
 
-    <select
-      v-model="selectedValue"
-      :name="projectType ? 'project-type' : 'design-type'"
-      @change="emitSelectedValue(fieldSlug)"
-    >
-      <option value="">Choisir un {{ projectType ? "type de projet" : "type de design" }}</option>
+    <select v-model="selectedValue" :name="props.name" @change="emitSelectedValue(fieldSlug)">
+      <option v-if="name === 'Technologies'" value="">Choisir un type de projet</option>
+      <option v-else value="">Choisir un type de design</option>
+
       <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
     </select>
   </div>

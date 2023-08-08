@@ -1,11 +1,17 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 
+const props = defineProps({
+  slug: {
+    type: String,
+    default: ""
+  }
+});
 const emit = defineEmits(["SelectedValues"]);
 const specificTemplates = ref([]);
 
 const emitValuesToParent = () => {
-  emit("SelectedValues", specificTemplates.value);
+  emit("SelectedValues", specificTemplates.value, props.slug);
 };
 
 const addSpecificTemplate = () => {

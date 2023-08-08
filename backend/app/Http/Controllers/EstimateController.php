@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estimate;
+use App\Models\EstimateField;
 use App\Models\EstimateLine;
+use App\Models\EstimateFieldValue;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -29,22 +31,108 @@ class EstimateController extends Controller
         // $estimate->save();
         // return response()->json($estimate, 201);
 
+        $form = $request->all();
+
+        // dd($form);
+
+        // dd($form);
+
+        $fields = EstimateField::all();
+
+        $lines = [];
         $estimate = new Estimate();
-        $estimate->name = $request->name;
-        $estimate->total_time = $request->total_time;
+
+        foreach ($fields as $field) {
+            if ($field->slug == "nom-du-projet") {
+                $estimate->name = $form["nom-du-projet"];
+            }
+            if ($field->type == "select") {
+                // var_dump($form[$field->slug]);
+                $value = $form[$field->slug];
+                $preset = $field->values()->where("value", $value)->get();
+                $time = $preset[0]['startup_time'] ? $preset[0]['startup_time'] : $preset[0]['total_percentage'];
+
+                if ($form[$field->slug] === 'laravel' || $form[$field->slug] === 'laravel-et-vuejs') {
+                    $label = "Type de projet : " . $preset[0]["label"];
+                } else {
+                    $label = "Type de design : " . $preset[0]["label"];
+                }
+
+                $lines[] = ["label" => $label, "type" => "specific", "time" => $time];
+            }
+            if ($field->type == "checkbox") {
+
+                foreach ($form[$field->slug] as $formField) {
+                    $value = $formField;
+                    $preset = $field->values()->where("value", $value)->get();
+                    $time = $preset[0]["time"];
+                    $lines[] = ["label" => $preset[0]["label"], "type" => "general", "time" => $time];
+                }
+            }
+            if ($field->type == "custom") {
+
+                foreach ($form[$field->slug] as $formField) {
+                    $lines[] = ["label" => $formField["name"], "type" => "general", "time" => $formField["time"]];
+                }
+            }
+        }
+
+
+        $estimate->total_time = 120;
 
         $estimate->save();
 
+        $estimate->lines()->createMany($lines);
 
-        $estimateLinesData = $request->input('estimate_lines', []);
-        foreach ($estimateLinesData as $lineData) {
-            $estimateLine = new EstimateLine();
-            $estimateLine->label = $lineData['label'];
-            $estimateLine->time = $lineData['time'];
-            $estimateLine->type = $lineData['type'];
+        // dd($lines);
+        $estimate->save();
 
-            $estimate->lines()->save($estimateLine);
+        // dd($estimate);
+
+
+
+        // $value = $form[$field->slug];
+        // $preset = $field->values()->where("value", $value)->get();
+        // $time = $preset->time ?? $preset->startup_time;
+        // $lines[] = ["label" => $field->name, "type" => "general", "time" => $time];
+
+
+
+
+        // $estimateLinesData = $request->input('estimate_lines', []);
+        // foreach ($estimateLinesData as $lineData) {
+        //     $estimateLine = new EstimateLine();
+        //     $estimateLine->label = $lineData['label'];
+        //     $estimateLine->time = $lineData['time'];
+        //     $estimateLine->type = $lineData['type'];
+        //     if (
+        //         $lineData['label'] === "page-daccueil" ||
+        //         $lineData['label'] === "evenement" ||
+        //         $lineData['label'] === "page-de-type-editoriale" ||
+        //         $lineData['label'] === "offres-demplois" ||
+        //         $lineData['label'] === "blog"
+        //     ) {
+        //         $estimateFieldValue = EstimateFieldValue::where('value',  $lineData['label'])->first();
+        //         $estimateLine->time = $estimateFieldValue->time;
+        //     }
+        //     $estimate->lines()->save($estimateLine);
+        // }
+
+        /*
+        $fields = EstimateField:all();
+        $lines = []
+        foreach ($fields as $field) {
+            if ($field->slug == "nom-du-projet") {
+                $name = $form["nom-du-projet"];
+            }
+            if ($field->type == "select") {
+                $value = $form[$field->slug];
+                $preset = $field->values()->where("value", "=", $value)->get();
+                $time = $preset->time ?? $preset->startup_time;
+                $lines[] = ["label" => $field->name, $type => "general", "time" => $time]
+            }
         }
+        */
 
 
         return response()->json($estimate, 201);

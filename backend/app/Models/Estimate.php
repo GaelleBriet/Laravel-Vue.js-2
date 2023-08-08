@@ -10,6 +10,8 @@ class Estimate extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['label'];
+
     public function lines(): HasMany
     {
         return $this->hasMany(EstimateLine::class);
