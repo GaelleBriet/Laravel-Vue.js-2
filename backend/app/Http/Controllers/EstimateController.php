@@ -72,7 +72,7 @@ class EstimateController extends Controller
                 // informationsde la ligne à créer
                 $lines[] = ["label" => $label, "type" => "specific", "time" => $time];
 
-                // on ajoute au temps total les temps simplss sans % supp.
+                // on ajoute au temps total les temps simples sans %
                 $estimate->total_time += $time;
             }
 
@@ -87,7 +87,8 @@ class EstimateController extends Controller
 
                     $lines[] = ["label" => $preset[0]["label"], "type" => "general", "time" => $time];
 
-                    // on ajoute au temps total les temps simples
+                    // on ajoute au temps total les temps simples 
+                    $estimate->total_time += $time;
                 }
             }
 
@@ -102,9 +103,7 @@ class EstimateController extends Controller
         }
 
         $estimate->save();
-
         $estimate->lines()->createMany($lines);
-
         return response()->json($estimate, 201);
     }
 
