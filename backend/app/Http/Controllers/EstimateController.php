@@ -74,6 +74,7 @@ class EstimateController extends Controller
 
                 // on ajoute au temps total les temps simples sans %
                 $estimate->total_time += $time;
+                $percentage += $percentage;
             }
 
             if ($field->type == "checkbox"  && isset($form[$field->slug])) {
@@ -101,6 +102,8 @@ class EstimateController extends Controller
                 }
             }
         }
+
+        $estimate->total_time +=  $estimate->total_time * $percentage / 100;
 
         $estimate->save();
         $estimate->lines()->createMany($lines);
