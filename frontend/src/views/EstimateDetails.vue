@@ -3,6 +3,7 @@ import TitleComponent from "@/components/TitleComponent.vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useEstimateStore } from "@/stores/EstimateStore.js";
+import { getMinutesToHours } from "../services/MinutesToHours";
 
 const route = useRoute();
 const store = useEstimateStore();
@@ -31,23 +32,23 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="generalLine in store.estimateLineGeneral">
+        <tr v-for="(generalLine, index) in store.estimateLineGeneral" :key="index">
           <td>{{ generalLine.label }}</td>
-          <td>{{ Math.floor(generalLine.time / 60) }}h</td>
+          <td>{{ getMinutesToHours(generalLine.time) }}</td>
         </tr>
         <tr class="project-infos">
           <td>Spécificités</td>
           <td>Temps supplémentaire</td>
         </tr>
-        <tr v-for="SpecialLine in store.estimateLineSpecial">
+        <tr v-for="(SpecialLine, index) in store.estimateLineSpecial" :key="index">
           <td>{{ SpecialLine.label }}</td>
-          <td>{{ Math.floor(SpecialLine.time / 60) }}h</td>
+          <td>{{ getMinutesToHours(SpecialLine.time) }}</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
           <td>Total</td>
-          <td>{{ Math.floor(store.estimate.total_time / 60) }}h</td>
+          <td>{{ getMinutesToHours(store.estimate.total_time) }}</td>
         </tr>
       </tfoot>
     </table>
