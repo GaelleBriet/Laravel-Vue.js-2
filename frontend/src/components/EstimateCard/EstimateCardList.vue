@@ -1,15 +1,16 @@
 <script setup>
-  const props = defineProps({
-    estimates: {
-      type: Array,
-      required: true
-    },
-    loading: {
-      type: Boolean,
-      required: true
-    },
-  });
+import { getMinutesToHours } from "@/services/MinutesToHours.js";
 
+defineProps({
+  estimates: {
+    type: Array,
+    required: true
+  },
+  loading: {
+    type: Boolean,
+    required: true
+  }
+});
 </script>
 
 <template>
@@ -20,10 +21,10 @@
     <p class="errors center">Pas de données</p>
   </template>
   <template v-else>
-    <li v-for="estimate in estimates">
+    <li v-for="(estimate, index) in estimates" :key="index">
       <routerLink :to="'/details/' + estimate.id" class="estimate-card">
-        <span class="project-name">{{estimate.name}}</span>
-        <span class="project-time">{{ Math.floor(estimate.total_time / 60) }}h</span>
+        <span class="project-name">{{ estimate.name }}</span>
+        <span class="project-time">{{ getMinutesToHours(estimate.total_time) }}</span>
       </routerLink>
     </li>
   </template>
