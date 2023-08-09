@@ -11,6 +11,9 @@ import { useEstimateField } from "@/stores/EstimateFieldsStore.js";
 const router = useRouter();
 const estimateFieldStore = useEstimateField();
 const estimateFields = estimateFieldStore.estimateFields;
+
+const isFormValid = ref(false);
+
 let projectName = ref(false);
 
 const form = reactive({});
@@ -20,7 +23,20 @@ const handleUpdate = (value, slug) => {
     projectName.value = true;
   }
   form[slug] = value;
-  console.log(form);
+
+  checkFormValidity();
+};
+
+const checkFormValidity = () => {
+  isFormValid.value =
+    estimateFields.every(field => {
+      if (field.type === "text" || field.type === "select") {
+        return form[field.slug] !== undefined && form[field.slug] !== "";
+      } else if (field.type === "checkbox") {
+        return form[field.slug] !== undefined;
+      }
+      return true;
+    }) && projectName.value;
 };
 
 const handleSubmit = async () => {
@@ -42,7 +58,10 @@ onMounted(async () => {
 <template>
   <TitleComponent title="Calculato'r" />
   <form class="estimator-form" @submit.prevent="handleSubmit">
-    <div v-if="!projectName" class="errors">Le nom du projet est obligatoire.</div>
+    <div v-if="!isFormValid" class="errors">
+      Veuillez remplir les champs suivants : Nom du projet, Type de projet, au moins un Développement générique, Type de
+      design
+    </div>
 
     <template v-for="field in estimateFields" :key="field.id">
       <template v-if="field.type === 'text'">
@@ -62,7 +81,7 @@ onMounted(async () => {
       </template>
     </template>
 
-    <button type="submit" class="button">Obtenir l'estimation</button>
+    <button type="submit" class="button" :disabled="!isFormValid">Obtenir l'estimation</button>
   </form>
 </template>
 

@@ -1,4 +1,4 @@
-const BASE_URL = "http://pabloprevot-server.eddi.cloud:8090";
+const BASE_URL = "http://gaellebriet-server.eddi.cloud:8090";
 
 
 const ApiService = {
