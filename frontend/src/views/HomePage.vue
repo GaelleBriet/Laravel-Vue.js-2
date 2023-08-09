@@ -33,7 +33,7 @@ const checkFormValidity = () => {
       if (field.type === "text" || field.type === "select") {
         return form[field.slug] !== undefined && form[field.slug] !== "";
       } else if (field.type === "checkbox") {
-        return form[field.slug] !== undefined;
+        return form[field.slug] !== undefined && form[field.slug].length > 0;
       }
       return true;
     }) && projectName.value;
