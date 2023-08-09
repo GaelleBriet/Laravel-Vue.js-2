@@ -75,10 +75,8 @@ class EstimateController extends Controller
 
             if ($field->type == "select" && isset($form[$field->slug])) {
 
-                // var_dump($form[$field->slug]);
                 $value = $form[$field->slug];
                 $preset = $field->values()->where("value", $value)->get();
-                // $time = $preset[0]['startup_time'] ? $preset[0]['startup_time'] : $preset[0]['total_percentage'];
 
                 if ($form[$field->slug] === 'laravel' || $form[$field->slug] === 'laravel-et-vuejs') {
 
@@ -86,7 +84,7 @@ class EstimateController extends Controller
 
                     $time = $preset[0]['startup_time'];
                     $totalPureTime += $time;
-                    
+
                     $lines[] = ["label" => "Mise en place du projet", "type" => "general", "time" => $time];
 
                 }
@@ -110,9 +108,6 @@ class EstimateController extends Controller
             }
 
         }
-
-        dump($totalPureTime);
-        dump($percentageProjectType);
 
         $projectLine["time"] = $totalPureTime * ($percentageProjectType/100);
         $DesignLine["time"] = $totalPureTime * ($percentageDesignType/100);
