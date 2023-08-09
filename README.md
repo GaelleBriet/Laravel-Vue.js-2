@@ -1,18 +1,12 @@
 # Atelier : Back-end (Laravel) et front-end (Vue.js)
 
-Si tu lis ce message, c'est que tu as décidé de repartir d'un répertoire tout frais tout beau pour te lancer à l’assaut de l'atelier.
-
-Mais attention, il va te falloir procéder à quelques étapes avant de pouvoir travailler !
-
 ## Initialisation du back-end
 
 ```bash
 cd backend
 ```
 
-Pense à lire le fichier `correction-backend.md` pour avoir des informations sur la correction du parcours, avec notamment les détails de l'environnement de développement utilisé avec Docker.
-
-L'important à savoir est que l'environnement peut être lancé avec la commande suivante :
+L'environnement peut être lancé avec la commande suivante :
 
 ```bash
 docker-compose up -d --build
@@ -46,6 +40,16 @@ Rends-toi dans le répertoire dédié et lance l'installation des dépendances.
 ```bash
 cd frontend
 npm install
+```
+
+Changer la constante de l'ApiService.js dans src/services/ApiServices.js.
+
+En modifiant évidament "prenomnom" par ton prenom et ton nom.
+
+Sinon rien ne sera chargé étant donné que les call Api ne vont mener null part et donc rien retourner.
+
+```
+const BASE_URL = "http://prenomnom-server.eddi.cloud:8090";
 ```
 
 À ce stade, tu devrais pouvoir lancer ton application Vue sans soucis avec Vite.
