@@ -5,7 +5,7 @@ import { useEstimateField } from "@/stores/EstimateFieldsStore.js";
 const props = defineProps({
   id: {
     type: Number,
-    default: 0 // valeur par défaut (eslint)
+    default: 0
   },
   slug: {
     type: String,
@@ -19,7 +19,6 @@ const props = defineProps({
 
 const emitSelectedValue = () => {
   if (selectedValue.value) {
-    // Émettre l'événement personnalisé avec la valeur sélectionnée
     emit("selected", selectedValue.value, props.slug);
   }
 };
@@ -42,6 +41,7 @@ onMounted(async () => {
   }
 });
 </script>
+
 <template>
   <div class="input-group">
     <span v-if="name === 'Technologies'" class="main-label">Type de projet</span>
@@ -57,34 +57,3 @@ onMounted(async () => {
 </template>
 
 <style scoped></style>
-
-<!-- <div class="input-group">
-  <span class="main-label">{{ projectType ? "Type de projet" : "Type de design" }}</span>
-
-  <select :name="projectType ? 'project-type' : 'design-type'">
-    <option value="">Choisir un {{ projectType ? "type de projet" : "type de design" }}</option>
-    <option value="simple">{{ projectType ? "Laravel" : "Design simple" }}</option>
-    <option value="complex">{{ projectType ? "Laravel et Vue.js" : "Design complexe" }}</option>
-    <option v-if="designType" value="animations">Design complexe avec animations</option>
-  </select>
-</div> -->
-
-<!-- <div v-if="projectType" class="input-group">
-  <span class="main-label">Type de projet</span>
-
-  <select name="project-type">
-    <option value="">Choisir un type de projet</option>
-    <option value="simple">Laravel</option>
-    <option value="complex">Laravel et Vue.js</option>
-  </select>
-</div>
-<div class="input-group">
-  <span class="main-label">Type de design</span>
-
-  <select v-if="designType" name="design-type">
-    <option value="">Choisir un type de design</option>
-    <option value="simple">Design simple</option>
-    <option value="complex">Design complexe</option>
-    <option value="animations">Design complexe avec animations</option>
-  </select>
-</div> -->

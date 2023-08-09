@@ -34,7 +34,7 @@ class EstimateController extends Controller
 
         $totalPureTime = 0;
         $percentageProjectType = 0;
-        $percentageDesignType= 0;
+        $percentageDesignType = 0;
 
         $projectLine = [];
         $DesignLine = [];
@@ -57,20 +57,18 @@ class EstimateController extends Controller
 
                     $lines[] = ["label" => $preset[0]["label"], "type" => "general", "time" => $time];
                 }
-
             }
 
             if ($field->type == "custom" && isset($form[$field->slug])) {
 
                 foreach ($form[$field->slug] as $formField) {
-        
+
                     // adding that time to totalTime (without %) hours -> minutes
-                    $time = $formField["time"]*60;
+                    $time = $formField["time"] * 60;
                     $totalPureTime += $time;
 
                     $lines[] = ["label" => $formField["name"], "type" => "general", "time" => $time];
                 }
-
             }
 
             if ($field->type == "select" && isset($form[$field->slug])) {
@@ -86,14 +84,12 @@ class EstimateController extends Controller
                     $totalPureTime += $time;
 
                     $lines[] = ["label" => "Mise en place du projet", "type" => "general", "time" => $time];
-
                 }
 
-                if ($form[$field->slug] === 'simple' || $form[$field->slug] === 'complexe' || $form[$field->slug] === 	"complexe-avec-animations") {
+                if ($form[$field->slug] === 'simple' || $form[$field->slug] === 'complexe' || $form[$field->slug] ===     "complexe-avec-animations") {
 
                     // Design
                     $percentageDesignType = $preset[0]['total_percentage'];
-
                 }
 
                 // traitement pour afficher le texte dans le tableau de la page /details
@@ -104,13 +100,11 @@ class EstimateController extends Controller
                     $DesignLine["label"] = "Type de design : " . $preset[0]["label"];
                     $DesignLine["type"] = "specific";
                 }
-
             }
-
         }
 
-        $projectLine["time"] = $totalPureTime * ($percentageProjectType/100);
-        $DesignLine["time"] = $totalPureTime * ($percentageDesignType/100);
+        $projectLine["time"] = $totalPureTime * ($percentageProjectType / 100);
+        $DesignLine["time"] = $totalPureTime * ($percentageDesignType / 100);
 
         $lines[] = $projectLine;
         $lines[] = $DesignLine;

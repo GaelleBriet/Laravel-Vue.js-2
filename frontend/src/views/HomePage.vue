@@ -27,9 +27,6 @@ const handleSubmit = async () => {
   try {
     const createdEstimate = await estimateFieldStore.create("estimates", form);
 
-    console.log("Estimate created:", createdEstimate);
-
-    //router.push("/details/");
     Object.assign(form, {});
     router.push(`/details/${createdEstimate.id}`);
   } catch (error) {
