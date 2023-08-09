@@ -23,7 +23,7 @@
     <li v-for="estimate in estimates">
       <routerLink :to="'/details/' + estimate.id" class="estimate-card">
         <span class="project-name">{{estimate.name}}</span>
-        <span class="project-time">{{estimate.total_time}}h</span>
+        <span class="project-time">{{ Math.floor(estimate.total_time / 60) }}h</span>
       </routerLink>
     </li>
   </template>

@@ -33,7 +33,7 @@ onMounted(async () => {
       <tbody>
         <tr v-for="generalLine in store.estimateLineGeneral">
           <td>{{ generalLine.label }}</td>
-          <td>{{ generalLine.time }}h</td>
+          <td>{{ Math.floor(generalLine.time / 60) }}h</td>
         </tr>
         <tr class="project-infos">
           <td>Spécificités</td>
@@ -41,13 +41,13 @@ onMounted(async () => {
         </tr>
         <tr v-for="SpecialLine in store.estimateLineSpecial">
           <td>{{ SpecialLine.label }}</td>
-          <td>{{ SpecialLine.time }}h</td>
+          <td>{{ Math.floor(SpecialLine.time / 60) }}h</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
           <td>Total</td>
-          <td>{{ store.estimate.total_time }}h</td>
+          <td>{{ Math.floor(store.estimate.total_time / 60) }}h</td>
         </tr>
       </tfoot>
     </table>
