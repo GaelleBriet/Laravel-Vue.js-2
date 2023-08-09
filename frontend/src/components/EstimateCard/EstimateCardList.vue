@@ -1,16 +1,16 @@
 <script setup>
-import { getMinutesToHours } from "@/services/MinutesToHours.js";
+  import EstimateCard from "@/components/EstimateCard/EstimateCard.vue";
 
-defineProps({
-  estimates: {
-    type: Array,
-    required: true
-  },
-  loading: {
-    type: Boolean,
-    required: true
-  }
-});
+  defineProps({
+    estimates: {
+      type: Array,
+      required: true
+    },
+    loading: {
+      type: Boolean,
+      required: true
+    }
+  });
 </script>
 
 <template>
@@ -22,10 +22,7 @@ defineProps({
   </template>
   <template v-else>
     <li v-for="(estimate, index) in estimates" :key="index">
-      <routerLink :to="'/details/' + estimate.id" class="estimate-card">
-        <span class="project-name">{{ estimate.name }}</span>
-        <span class="project-time">{{ getMinutesToHours(estimate.total_time) }}</span>
-      </routerLink>
+      <EstimateCard :estimate="estimate" />
     </li>
   </template>
 </template>

@@ -1,7 +1,19 @@
-<script setup></script>
+<script setup>
+  import { getMinutesToHours } from "@/services/MinutesToHours.js";
+
+  defineProps({
+    estimate: {
+      type: Object,
+      required: true
+    },
+  });
+</script>
 
 <template>
-  <h2>Composant : EstimateCard.vue</h2>
+  <routerLink :to="'/details/' + estimate.id" class="estimate-card">
+    <span class="project-name">{{ estimate.name }}</span>
+    <span class="project-time">{{ getMinutesToHours(estimate.total_time) }}</span>
+  </routerLink>
 </template>
 
 <style scoped></style>
