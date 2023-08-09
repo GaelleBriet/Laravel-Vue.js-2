@@ -5,7 +5,7 @@ import { ref, onMounted } from "vue";
 const props = defineProps({
   id: {
     type: Number,
-    default: 0 // valeur par défaut (eslint)
+    default: 0
   },
   slug: {
     type: String,

@@ -7,6 +7,7 @@ const props = defineProps({
     default: ""
   }
 });
+
 const emit = defineEmits(["SelectedValues"]);
 const specificTemplates = ref([]);
 
@@ -52,13 +53,3 @@ const removeSpecificTemplate = index => {
 </template>
 
 <style scoped></style>
-
-<!-- <div class="input-group">
-  <span class="main-label">Développements spécifiques</span>
-
-  <div id="specificTemplateList" class="specific-template-list"></div>
-
-  <button id="addSpecificTemplate" class="button button-icon" type="button" @click="addSpecificTemplateFields">
-    <i class="fa fa-plus"></i>
-  </button>
-</div> -->
